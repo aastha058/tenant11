@@ -30,9 +30,30 @@ Route::middleware([
         dd($user->toArray());
         return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
     });
-    Route::get('/index', [ProfileController::class, 'index'])->name('tenant.index');
+    
 
     Route::get('/login', function () {
         return 'This is the text for tenant ' . tenant('id');
     });
 });
+
+use App\Http\Controllers\Tenant\ProductController;
+
+Route::middleware([
+    'web',
+    InitializeTenancyByDomain::class,
+    PreventAccessFromCentralDomains::class,
+    'auth',
+]);
+
+    Route::get('/products', [ProductController::class, 'index'])
+        ->name('tenant.products.index');
+
+    Route::get('/products/create', [ProductController::class, 'create'])
+        ->name('tenant.products.create');
+
+    Route::post('/products', [ProductController::class, 'store'])
+        ->name('tenant.products.store');
+
+
+

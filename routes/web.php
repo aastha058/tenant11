@@ -10,7 +10,7 @@ Route::group(['domain'=>config('tenancy.central_domains.0')], function () {
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/index', [ProfileController::class, 'index'])->name('tenant.index');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
