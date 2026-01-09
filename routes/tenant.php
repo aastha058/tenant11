@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Tenant\AuthController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -32,9 +33,10 @@ Route::middleware([
     });
     
 
-    Route::get('/login', function () {
-        return 'This is the text for tenant ' . tenant('id');
-    });
+   
+Route::get('/index', function () {
+    return view('tenant.index');
+});
 });
 
 use App\Http\Controllers\Tenant\ProductController;
@@ -46,14 +48,22 @@ Route::middleware([
     'auth',
 ]);
 
-    Route::get('/products', [ProductController::class, 'index'])
-        ->name('tenant.products.index');
+Route::prefix('tenant1')->group(function () {
+    Route::get('/login', [AuthController::class, 'login'])->name('tenant1.login');
+    Route::post('/login', [AuthController::class, 'login'])->name('tenant1.login.post');
 
-    Route::get('/products/create', [ProductController::class, 'create'])
-        ->name('tenant.products.create');
+    Route::get('/register', [AuthController::class, 'register'])->name('tenant1.register');
+    Route::post('/register', [AuthController::class, 'register'])->name('tenant1.register.post');
 
-    Route::post('/products', [ProductController::class, 'store'])
-        ->name('tenant.products.store');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('tenant1.logout');
+});
+
+
+
+
+  
+
+   
 
 
 

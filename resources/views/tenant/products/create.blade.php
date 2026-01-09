@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create Product</title>
-</head>
-<body>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Dashboard') }}
+        </h2>
+    </x-slot>
 
-<h1>Create Product</h1>
-
-<form method="POST" action="{{ route('tenant.products.store') }}">
+    <div class="py-12">
+        <form method="POST" action="{{ route('tenant.products.store') }}">
     @csrf
 
     <div>
@@ -27,6 +26,7 @@
 
     <button type="submit">Save</button>
 </form>
+    </div>
+</x-app-layout>
 
-</body>
-</html>
+
